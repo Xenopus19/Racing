@@ -13,3 +13,8 @@ Plugins/*
 *.suo
 *.xcodeproj
 *.xcworkspace
+
+EditorUIScaleCustomization/*
+
+*/RiderLink/*
+.idea/
