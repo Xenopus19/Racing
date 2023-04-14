@@ -33,9 +33,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* BackCamera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
-	USpringArmComponent* SpringArm1;
+	USpringArmComponent* BackSpringArm1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
-	USpringArmComponent* SpringArm2;
+	USpringArmComponent* FrontSpringArm2;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
 	USkeletalMeshComponent* CarMesh;

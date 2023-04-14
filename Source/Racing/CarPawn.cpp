@@ -54,15 +54,15 @@ void ACarPawn::BrakeLights(bool BrakeLights)
 FTransform ACarPawn::FindResetTransform()
 {
 	FVector NewLocation = GetActorLocation() + FVector(0, 0, 50);
-	FRotator NewRotation = FRotator(0, 0, GetActorRotation().Yaw);
+	FRotator NewRotation = FRotator(0, GetActorRotation().Yaw, 0);
 	return FTransform(NewRotation, NewLocation, FVector(1, 1, 1));
 }
 
 void ACarPawn::InterpsToOriginalRotation()
 {
-	float Yaw = SpringArm1->GetRelativeRotation().Yaw;
+	float Yaw = BackSpringArm1->GetRelativeRotation().Yaw;
 	float NewYaw = FMath::FInterpTo(Yaw, 0, GetWorld()->GetDeltaSeconds(), 1);
-	SpringArm1->SetRelativeRotation(FRotator(0, 0, NewYaw));
+	BackSpringArm1->SetRelativeRotation(FRotator(0, NewYaw, 0));
 }
 
 void ACarPawn::BindActions(UEnhancedInputComponent* Input)
@@ -113,7 +113,7 @@ void ACarPawn::HandBrakeCompleted(const FInputActionInstance& Instance)
 void ACarPawn::LookAround(const FInputActionInstance& Instance)
 {
 	float FloatValue = Instance.GetValue().Get<float>();
-	SpringArm1->AddLocalRotation(FRotator(0, 0, FloatValue*100));
+	BackSpringArm1->AddLocalRotation(FRotator(0, FloatValue, 0));
 }
 
 void ACarPawn::Reset(const FInputActionInstance& Instance)
