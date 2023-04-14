@@ -112,9 +112,8 @@ void ACarPawn::HandBrakeCompleted(const FInputActionInstance& Instance)
 
 void ACarPawn::LookAround(const FInputActionInstance& Instance)
 {
-	UE_LOG(Car, Display, TEXT("Look around"))
 	float FloatValue = Instance.GetValue().Get<float>();
-	SpringArm1->AddLocalRotation(FRotator(0, 0, FloatValue));
+	SpringArm1->AddLocalRotation(FRotator(0, 0, FloatValue*100));
 }
 
 void ACarPawn::Reset(const FInputActionInstance& Instance)
@@ -138,6 +137,7 @@ void ACarPawn::Throttle(const FInputActionInstance& Instance)
 
 void ACarPawn::ToggleCamera(const FInputActionInstance& Instance)
 {
+	HasCameraChanged = !HasCameraChanged;
 	FrontCamera->Deactivate();
 	BackCamera->Deactivate();
 	if (HasCameraChanged)

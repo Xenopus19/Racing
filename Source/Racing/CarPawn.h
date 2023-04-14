@@ -28,7 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	
-	UPROPERTY(EditAnywhere, Category="Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* FrontCamera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* BackCamera;
