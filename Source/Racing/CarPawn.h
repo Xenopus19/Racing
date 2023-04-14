@@ -28,7 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
+	UPROPERTY(EditAnywhere, Category="Camera")
 	UCameraComponent* FrontCamera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* BackCamera;
@@ -69,13 +69,11 @@ protected:
 private:
 	bool HasCameraChanged = false;
 
-private:
 	void InterpsToOriginalRotation();
 	void BrakeLights(bool BrakeLights);
 	FTransform FindResetTransform();
 
 	void BindActions(UEnhancedInputComponent* Input);
-	void SetActionParameters();
 
 	void BreakStarted(const FInputActionInstance& Instance);
 	void BreakTriggered(const FInputActionInstance& Instance);

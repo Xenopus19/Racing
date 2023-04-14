@@ -6,8 +6,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "NavMesh/NavMeshRenderingComponent.h"
 #include "Math/UnrealMathUtility.h"
+
+DEFINE_LOG_CATEGORY_STATIC(Car, All, All)
 
 void ACarPawn::BeginPlay()
 {
@@ -22,22 +23,24 @@ void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         
 		if (UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
-			InputSystem->AddMappingContext(IMCControls, 10);
+			InputSystem->AddMappingContext(IMCControls, 0);
 		}
 	}
     
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-	SetActionParameters();
 	BindActions(Input);
 }
 
 void ACarPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UNavMovementComponent* MovementComponent = dynamic_cast<UNavMovementComponent*>(ChaosWheeledVehicleMovementComponent);
-	float InDampimg = MovementComponent->IsMovingOnGround() ? 0 : 3;
-	CarMesh->SetAngularDamping(InDampimg);
-	InterpsToOriginalRotation();
+	UNavMovementComponent* MovementComponent = Cast<UNavMovementComponent>(ChaosWheeledVehicleMovementComponent);
+	if (MovementComponent)
+	{
+		float InDampimg = MovementComponent->IsMovingOnGround() ? 0 : 3;
+		CarMesh->SetAngularDamping(InDampimg);
+		InterpsToOriginalRotation();
+	}
 }
 
 void ACarPawn::BrakeLights(bool BrakeLights)
@@ -78,16 +81,6 @@ void ACarPawn::BindActions(UEnhancedInputComponent* Input)
 	Input->BindAction(InputActionToggleCamera, ETriggerEvent::Started, this, &ACarPawn::ToggleCamera);
 }
 
-void ACarPawn::SetActionParameters()
-{
-	InputActionBreak->ValueType = EInputActionValueType::Axis1D;
-	InputActionThrottle->ValueType = EInputActionValueType::Axis1D;
-	InputActionLookAround->ValueType = EInputActionValueType::Axis1D;
-	InputActionSteering->ValueType = EInputActionValueType::Axis1D;
-	//InputActionThrottle->Triggers = TArray<UInputTrigger*>(UInputTriggerPressed, 1);
-	//InputActionToggleCamera->Triggers = UInputTriggerPressed<>;
-}
-
 void ACarPawn::BreakStarted(const FInputActionInstance& Instance)
 {
 	BrakeLights(true);
@@ -119,13 +112,14 @@ void ACarPawn::HandBrakeCompleted(const FInputActionInstance& Instance)
 
 void ACarPawn::LookAround(const FInputActionInstance& Instance)
 {
+	UE_LOG(Car, Display, TEXT("Look around"))
 	float FloatValue = Instance.GetValue().Get<float>();
 	SpringArm1->AddLocalRotation(FRotator(0, 0, FloatValue));
 }
 
 void ACarPawn::Reset(const FInputActionInstance& Instance)
 {
-	SetActorTransform(FindResetTransform());
+	this->SetActorTransform(FindResetTransform(), false, nullptr, ETeleportType::TeleportPhysics);
 	CarMesh->SetPhysicsAngularVelocityInDegrees(FVector::Zero());
 	CarMesh->SetPhysicsLinearVelocity(FVector::Zero());
 }
