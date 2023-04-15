@@ -39,9 +39,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
 	USkeletalMeshComponent* CarMesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="VehicleComponent")
-	UChaosWheeledVehicleMovementComponent* ChaosWheeledVehicleMovementComponent;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="VehicleComponent")
 	UChaosVehicleMovementComponent* ChaosVehicleMovementComponent;
 

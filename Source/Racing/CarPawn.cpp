@@ -26,7 +26,7 @@ void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 			InputSystem->AddMappingContext(IMCControls, 0);
 		}
 	}
-    
+
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	BindActions(Input);
 }
@@ -34,7 +34,7 @@ void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ACarPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UNavMovementComponent* MovementComponent = Cast<UNavMovementComponent>(ChaosWheeledVehicleMovementComponent);
+	UNavMovementComponent* MovementComponent = Cast<UNavMovementComponent>(ChaosVehicleMovementComponent);
 	if (MovementComponent)
 	{
 		float InDampimg = MovementComponent->IsMovingOnGround() ? 0 : 3;
