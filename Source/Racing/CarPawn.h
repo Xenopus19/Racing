@@ -43,33 +43,33 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="VehicleComponent")
 	UChaosVehicleMovementComponent* ChaosVehicleMovementComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Material")
+	UPROPERTY(EditDefaultsOnly, Category="Material")
 	UMaterialInterface* Material;
 
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionBreak;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionHandBrake;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionLookAround;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionReset;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionSteering;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionThrottle;
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputAction* InputActionToggleCamera;
 
-	UPROPERTY(EditAnywhere, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
 	UInputMappingContext* IMCControls;
 
 private:
 	bool HasCameraChanged = false;
 
+	FTransform FindResetTransform();
 	void InterpsToOriginalRotation();
 	void BrakeLights(bool BrakeLights);
-	FTransform FindResetTransform();
 
 	void BindActions(UEnhancedInputComponent* Input);
 

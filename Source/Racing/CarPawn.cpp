@@ -18,14 +18,6 @@ void ACarPawn::BeginPlay()
 void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	if (ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(GetController()))
-	{   
-        
-		if (UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
-		{
-			InputSystem->AddMappingContext(IMCControls, 0);
-		}
-	}
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	BindActions(Input);
