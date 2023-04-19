@@ -9,6 +9,6 @@ void AAddSpeedPickupItem::DoPickupAction(UPrimitiveComponent* HitComponent, AAct
 
 	if(Other->IsA(ACar::StaticClass()))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Collided with car")));
+		
 	}
 }

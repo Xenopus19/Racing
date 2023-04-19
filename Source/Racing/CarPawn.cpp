@@ -13,6 +13,7 @@ DEFINE_LOG_CATEGORY_STATIC(Car, All, All)
 void ACarPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	ChaosVehicleMovementComponent = FindComponentByClass<UChaosVehicleMovementComponent>();
 }
 
 void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
