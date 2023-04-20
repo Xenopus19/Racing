@@ -23,5 +23,5 @@ void APickupItemBase::BeginPlay()
 
 void APickupItemBase::DoPickupAction(UPrimitiveComponent* HitComponent, AActor* Other, UPrimitiveComponent* OtherComp, FVector Impulse, const FHitResult& Hit)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Collided with something")));
+	
 }
