@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "PickupItemBase.h"
-#include "Car.h"
 #include "AddSpeedPickupItem.generated.h"
 
 UCLASS()

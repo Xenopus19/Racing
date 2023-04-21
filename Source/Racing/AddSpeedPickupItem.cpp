@@ -6,9 +6,4 @@
 void AAddSpeedPickupItem::DoPickupAction(UPrimitiveComponent* HitComponent, AActor* Other, UPrimitiveComponent* OtherComp, FVector Impulse, const FHitResult& Hit)
 {
 	Super::DoPickupAction(HitComponent, Other, OtherComp, Impulse, Hit);
-
-	if(Other->IsA(ACar::StaticClass()))
-	{
-		
-	}
 }

@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "SpeedAttributeSet.generated.h"
 
-#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
-GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
+#define ATTRIBUTE_ACCESSORS(SpeedAttributeSet, PropertyName) \
+GAMEPLAYATTRIBUTE_PROPERTY_GETTER(SpeedAttributeSet, PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
@@ -18,6 +19,7 @@ class RACING_API USpeedAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="SpeedAttributes")
+	UPROPERTY(BlueprintReadOnly, Category = "Speed")
 	FGameplayAttributeData Speed;
+	ATTRIBUTE_ACCESSORS(USpeedAttributeSet, Speed)
 };
