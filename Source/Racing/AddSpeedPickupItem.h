@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayEffect.h"
 #include "PickupItemBase.h"
+#include "CarPawn.h"
 #include "AddSpeedPickupItem.generated.h"
 
 UCLASS()
@@ -13,8 +15,8 @@ class RACING_API AAddSpeedPickupItem : public APickupItemBase
 
 public:
 	
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	int SpeedBonus = 10;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<UGameplayEffect> SpeedBonus;
 	
 	virtual void DoPickupAction(UPrimitiveComponent* HitComponent, AActor* Other, UPrimitiveComponent* OtherComp, FVector Impulse, const FHitResult& Hit) override;
 };

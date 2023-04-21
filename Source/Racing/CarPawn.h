@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "WheeledVehiclePawn.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -22,11 +23,25 @@ class RACING_API ACarPawn : public AWheeledVehiclePawn
 	GENERATED_BODY()
 
 public:
+	ACarPawn();
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="GAS")
+	UAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GAS")
+	TSubclassOf<UGameplayEffect> InitSpeedEffect;
+
+	UFUNCTION(BlueprintCallable)
+	void ApplyGameplayEffect(UGameplayEffect* Effect);
 	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual void PostInitializeComponents() override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void ApplySpeedChanges(float Speed);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* FrontCamera;
@@ -83,5 +98,13 @@ private:
 	void Steering(const FInputActionInstance& Instance);
 	void Throttle(const FInputActionInstance& Instance);
 	void ToggleCamera(const FInputActionInstance& Instance);
+
+	void ApplyEffectsChanges(const FActiveGameplayEffect& EffectRemoved);
+	void ApplyEffectsChanges();
 };
+
+inline ACarPawn::ACarPawn()
+{
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+}
 

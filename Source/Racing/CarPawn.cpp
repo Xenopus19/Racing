@@ -5,15 +5,26 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
+#include "SpeedAttributeSet.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/UnrealMathUtility.h"
 
 DEFINE_LOG_CATEGORY_STATIC(Car, All, All)
 
+void ACarPawn::ApplyGameplayEffect(UGameplayEffect* Effect)
+{
+	FGameplayEffectContextHandle handle;
+	AbilitySystemComponent->ApplyGameplayEffectToSelf(Effect, 0, handle);
+	ApplyEffectsChanges();
+}
+
 void ACarPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	ChaosVehicleMovementComponent = FindComponentByClass<UChaosVehicleMovementComponent>();
+
+	ApplyGameplayEffect(InitSpeedEffect.GetDefaultObject());
+	AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ACarPawn::ApplyEffectsChanges);
 }
 
 void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -22,6 +33,16 @@ void ACarPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	BindActions(Input);
+}
+
+void ACarPawn::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	if(AbilitySystemComponent)
+	{
+		AbilitySystemComponent->AddSet<USpeedAttributeSet>();
+	}
 }
 
 void ACarPawn::Tick(float DeltaTime)
@@ -140,4 +161,16 @@ void ACarPawn::ToggleCamera(const FInputActionInstance& Instance)
 	}
 	BackCamera->Activate();
 }
+
+void ACarPawn::ApplyEffectsChanges(const FActiveGameplayEffect& EffectRemoved)
+{
+	ApplyEffectsChanges();
+}
+
+void ACarPawn::ApplyEffectsChanges()
+{
+	const float Speed = AbilitySystemComponent->GetSet<USpeedAttributeSet>()->GetSpeed();
+	ApplySpeedChanges(Speed);
+}
+
 

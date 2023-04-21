@@ -18,29 +18,4 @@ void ACarPlayerController::BeginPlay()
 			InputSystem->AddMappingContext(IMCControls, 0);
 		}
 	}
-
-	ApplyGameplayEffect(InitSpeedEffect.GetDefaultObject());
-	
-}
-
-ACarPlayerController::ACarPlayerController()
-{
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
-}
-
-void ACarPlayerController::PostInitializeComponents()
-{
-	Super::PostInitializeComponents();
-
-	if(AbilitySystemComponent)
-	{
-		AbilitySystemComponent->AddSet<USpeedAttributeSet>();
-	}
-}
-
-void ACarPlayerController::ApplyGameplayEffect(UGameplayEffect* Effect)
-{
-	FGameplayEffectContextHandle handle;
-	AbilitySystemComponent->ApplyGameplayEffectToSelf(Effect, 0, handle);
-	
 }
