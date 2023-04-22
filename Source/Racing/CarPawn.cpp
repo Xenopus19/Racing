@@ -8,6 +8,7 @@
 #include "SpeedAttributeSet.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/UnrealMathUtility.h"
+#include "Net/UnrealNetwork.h"
 
 DEFINE_LOG_CATEGORY_STATIC(Car, All, All)
 
@@ -16,6 +17,13 @@ void ACarPawn::ApplyGameplayEffect(UGameplayEffect* Effect)
 	FGameplayEffectContextHandle handle;
 	AbilitySystemComponent->ApplyGameplayEffectToSelf(Effect, 0, handle);
 	ApplyEffectsChanges();
+}
+
+void ACarPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACarPawn, AbilitySystemComponent);
 }
 
 void ACarPawn::BeginPlay()
@@ -43,6 +51,11 @@ void ACarPawn::PostInitializeComponents()
 	{
 		AbilitySystemComponent->AddSet<USpeedAttributeSet>();
 	}
+}
+
+void ACarPawn::OnRep_AbilitySystemComponent()
+{
+	ApplyEffectsChanges();
 }
 
 void ACarPawn::Tick(float DeltaTime)

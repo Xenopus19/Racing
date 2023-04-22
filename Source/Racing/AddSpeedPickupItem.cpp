@@ -9,7 +9,10 @@ void AAddSpeedPickupItem::DoPickupAction(UPrimitiveComponent* HitComponent, AAct
 
 	if(Other->IsA(ACarPawn::StaticClass()))
 	{
-		Cast<ACarPawn>(Other)->ApplyGameplayEffect(SpeedBonus.GetDefaultObject());
+		if(GetLocalRole() == ROLE_Authority)
+		{
+			Cast<ACarPawn>(Other)->ApplyGameplayEffect(SpeedBonus.GetDefaultObject());
+		}
 		Destroy();
 	}
 }

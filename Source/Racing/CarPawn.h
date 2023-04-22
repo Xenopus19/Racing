@@ -26,14 +26,19 @@ public:
 	ACarPawn();
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="GAS")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="GAS", ReplicatedUsing=OnRep_AbilitySystemComponent)
 	UAbilitySystemComponent* AbilitySystemComponent;
 
+	UFUNCTION()
+    void OnRep_AbilitySystemComponent();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GAS")
 	TSubclassOf<UGameplayEffect> InitSpeedEffect;
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyGameplayEffect(UGameplayEffect* Effect);
+
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 protected:
 	virtual void BeginPlay() override;
