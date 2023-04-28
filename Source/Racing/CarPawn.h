@@ -39,6 +39,12 @@ public:
 	void ApplyGameplayEffect(UGameplayEffect* Effect);
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	void IncreaseCheckpoint();
+	void ResetCheckpoint();
+	int GetCheckpoint() const;
+	int GetLap() const;
+	void IncreaseLap();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -85,6 +91,11 @@ protected:
 	UInputMappingContext* IMCControls;
 
 private:
+	int CurrentCheckpoint = 0;
+	
+	UPROPERTY(Replicated)
+	int CurrentLap = -1;
+
 	bool HasCameraChanged = false;
 
 	FTransform FindResetTransform();
@@ -99,7 +110,7 @@ private:
 	void HandBrakeTriggered(const FInputActionInstance& Instance);
 	void HandBrakeCompleted(const FInputActionInstance& Instance);
 	void LookAround(const FInputActionInstance& Instance);
-	void Reset(const FInputActionInstance& Instance);
+	void ResetRotation(const FInputActionInstance& Instance);
 	void Steering(const FInputActionInstance& Instance);
 	void Throttle(const FInputActionInstance& Instance);
 	void ToggleCamera(const FInputActionInstance& Instance);

@@ -2,8 +2,6 @@
 
 
 #include "CarPlayerController.h"
-#include "EnhancedInputSubsystems.h"
-#include "SpeedAttributeSet.h"
 
 DEFINE_LOG_CATEGORY_STATIC(Controller, All, All)
 
@@ -17,5 +15,20 @@ void ACarPlayerController::BeginPlay()
 		{
 			InputSystem->AddMappingContext(IMCControls, 0);
 		}
+
+		MovementComponent = Cast<AWheeledVehiclePawn>(GetPawn())->GetVehicleMovementComponent();
+		VelicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
+		VelicleWidget->AddToViewport(0);
 	}
+}
+
+void ACarPlayerController::UpdateLap_Implementation(int Lap)
+{
+	OnLapUpdated.Broadcast(Lap);
+}
+
+void ACarPlayerController::Destroyed()
+{
+	Super::Destroyed();
+	OnLapUpdated.Clear();
 }

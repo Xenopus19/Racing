@@ -4,13 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "ChaosVehicleMovementComponent.h"
 #include "InputMappingContext.h"
 #include "GameFramework/PlayerController.h"
+#include "Blueprint/UserWidget.h"
+#include "EnhancedInputSubsystems.h"
+#include "WheeledVehiclePawn.h"
 #include "CarPlayerController.generated.h"
-
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLapEvent, int, Lap);
+
 UCLASS()
 class RACING_API ACarPlayerController : public APlayerController
 {
@@ -24,6 +30,21 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	UInputMappingContext* IMCControls;
 
-protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="VehicleComponent")
+	UChaosVehicleMovementComponent* MovementComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
+	UUserWidget* VelicleWidget;
+	UPROPERTY(EditDefaultsOnly, Category="UI")
+	TSubclassOf<UUserWidget> WidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintAssignable, Category="Lap events")
+	FLapEvent OnLapUpdated;
+
+	UFUNCTION(BlueprintCallable, Client, Unreliable)
+	void UpdateLap(int Lap);
+
+private:
+	virtual void Destroyed() override;
 };
 

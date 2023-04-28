@@ -24,6 +24,7 @@ void ACarPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetime
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ACarPawn, AbilitySystemComponent);
+	DOREPLIFETIME(ACarPawn, CurrentLap);
 }
 
 void ACarPawn::BeginPlay()
@@ -78,6 +79,31 @@ void ACarPawn::BrakeLights(bool BrakeLights)
 	DynamicMaterial->SetScalarParameterValue("BrakeLightPower", Value);
 }
 
+void ACarPawn::IncreaseCheckpoint()
+{
+	CurrentCheckpoint++;
+}
+
+void ACarPawn::ResetCheckpoint()
+{
+	CurrentCheckpoint = 0;
+}
+
+int ACarPawn::GetCheckpoint() const
+{
+	return CurrentCheckpoint;
+}
+
+int ACarPawn::GetLap() const
+{
+	return CurrentLap;
+}
+
+void ACarPawn::IncreaseLap()
+{
+	CurrentLap++;
+}
+
 FTransform ACarPawn::FindResetTransform()
 {
 	FVector NewLocation = GetActorLocation() + FVector(0, 0, 50);
@@ -100,7 +126,7 @@ void ACarPawn::BindActions(UEnhancedInputComponent* Input)
 	Input->BindAction(InputActionHandBrake, ETriggerEvent::Triggered, this, &ACarPawn::HandBrakeTriggered);
 	Input->BindAction(InputActionHandBrake, ETriggerEvent::Completed, this, &ACarPawn::HandBrakeCompleted);
 	Input->BindAction(InputActionLookAround, ETriggerEvent::Triggered, this, &ACarPawn::LookAround);
-	Input->BindAction(InputActionReset, ETriggerEvent::Started, this, &ACarPawn::Reset);
+	Input->BindAction(InputActionReset, ETriggerEvent::Started, this, &ACarPawn::ResetRotation);
 	Input->BindAction(InputActionSteering, ETriggerEvent::Triggered, this, &ACarPawn::Steering);
 	Input->BindAction(InputActionSteering, ETriggerEvent::Completed, this, &ACarPawn::Steering);
 	Input->BindAction(InputActionThrottle, ETriggerEvent::Triggered, this, &ACarPawn::Throttle);
@@ -143,7 +169,7 @@ void ACarPawn::LookAround(const FInputActionInstance& Instance)
 	BackSpringArm1->AddLocalRotation(FRotator(0, FloatValue, 0));
 }
 
-void ACarPawn::Reset(const FInputActionInstance& Instance)
+void ACarPawn::ResetRotation(const FInputActionInstance& Instance)
 {
 	this->SetActorTransform(FindResetTransform(), false, nullptr, ETeleportType::TeleportPhysics);
 	CarMesh->SetPhysicsAngularVelocityInDegrees(FVector::Zero());
