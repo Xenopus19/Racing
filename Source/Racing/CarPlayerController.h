@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "CarPawn.h"
 #include "ChaosVehicleMovementComponent.h"
 #include "InputMappingContext.h"
 #include "GameFramework/PlayerController.h"
@@ -30,11 +31,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	UInputMappingContext* IMCControls;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="VehicleComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Vehicle")
 	UChaosVehicleMovementComponent* MovementComponent;
 
+	UPROPERTY(BlueprintReadWrite, Category="Vehicle")
+	ACarPawn* Vehicle;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	UUserWidget* VelicleWidget;
+	
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> WidgetClass;
 
@@ -43,6 +48,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Client, Unreliable)
 	void UpdateLap(int Lap);
+
+	UPROPERTY(EditDefaultsOnly, Category="Spectator")
+	TSubclassOf<AActor> SpectatorSpawn;
+
+	UPROPERTY(EditDefaultsOnly, Category="Spectator")
+	TSubclassOf<AActor> Spectator;
 
 private:
 	virtual void Destroyed() override;
