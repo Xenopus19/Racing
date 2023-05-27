@@ -14,7 +14,10 @@ Saved
 *.xcworkspace
 
 EditorUIScaleCustomization/*
-Content/MAEOakForest/Textures/Environments*
+Content/MAEOakForest/Textures/Environments/Trees*
+Content/MAEOakForest/Textures/Environments/Rocks*
+Content/MAEOakForest/Textures/Environments/Groundplants*
+Content/MAEOakForest/Textures/Environments/Covers*
 
 */RiderLink/*
 .idea/
