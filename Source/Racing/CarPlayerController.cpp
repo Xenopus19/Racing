@@ -2,6 +2,7 @@
 
 
 #include "CarPlayerController.h"
+#include "RacingGameStateBase.h"
 
 #include "Kismet/GameplayStatics.h"
 
@@ -39,6 +40,23 @@ void ACarPlayerController::BeginPlay()
 void ACarPlayerController::UpdateLap_Implementation(int Lap)
 {
 	OnLapUpdated.Broadcast(Lap);
+}
+
+void ACarPlayerController::ShowPlayerRank_Implementation(int Rank)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Show player rank"));
+	OnRaceFinished.Broadcast(Rank);
+}
+
+void ACarPlayerController::ProceedLapUpdating(int Lap)
+{
+	UpdateLap(Lap);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Proceed Lap Updating"));
+
+	if (Cast<ARacingGameStateBase>(GetGameInstance()->GetWorld()->GetGameState())->DidPlayerFinishRace(Lap))
+	{
+		ShowPlayerRank(Cast<ARacingGameStateBase>(GetGameInstance()->GetWorld()->GetGameState())->GetPlayersFinishedRace());
+	}
 }
 
 void ACarPlayerController::Destroyed()

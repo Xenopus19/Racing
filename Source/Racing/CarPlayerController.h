@@ -46,8 +46,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintAssignable, Category="Lap events")
 	FLapEvent OnLapUpdated;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintAssignable, Category = "Lap events")
+	FLapEvent OnRaceFinished;
+
 	UFUNCTION(BlueprintCallable, Client, Unreliable)
 	void UpdateLap(int Lap);
+
+	UFUNCTION(BlueprintCallable, Client, Unreliable)
+	void ShowPlayerRank(int Rank);
 
 	UPROPERTY(EditDefaultsOnly, Category="Spectator")
 	TSubclassOf<AActor> SpectatorSpawn;
@@ -55,7 +61,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Spectator")
 	TSubclassOf<AActor> Spectator;
 
+	UFUNCTION(BlueprintCallable)
+	void ProceedLapUpdating(int Lap);
+
 private:
+
+
 	virtual void Destroyed() override;
 };
 
