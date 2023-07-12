@@ -40,7 +40,7 @@ public:
 	ACarPawn* Vehicle;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
-	UUserWidget* VelicleWidget;
+	UUserWidget* VehicleWidget;
 	
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UUserWidget> WidgetClass;
@@ -65,6 +65,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ProceedLapUpdating(int Lap);
+
+ 
 
 private:
 

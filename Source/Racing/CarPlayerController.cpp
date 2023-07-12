@@ -22,8 +22,8 @@ void ACarPlayerController::BeginPlay()
 		}
 
 		MovementComponent = Vehicle->GetVehicleMovementComponent();
-		VelicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
-		VelicleWidget->AddToViewport(0);
+		VehicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
+		VehicleWidget->AddToViewport(0);
 	}
 
 	if (GetLocalRole() == ROLE_Authority)
@@ -33,7 +33,6 @@ void ACarPlayerController::BeginPlay()
 		FActorSpawnParameters const SpawnInfo;
 		AActor* SpawnedSpectator = GetWorld()->SpawnActor<AActor>(Location, FRotator::ZeroRotator);
 		Possess(Cast<APawn>(SpawnedSpectator));
-		//haha delay ne haha(((
 	}
 }
 
@@ -58,6 +57,8 @@ void ACarPlayerController::ProceedLapUpdating(int Lap)
 		ShowPlayerRank(Cast<ARacingGameStateBase>(GetGameInstance()->GetWorld()->GetGameState())->GetPlayersFinishedRace());
 	}
 }
+
+
 
 void ACarPlayerController::Destroyed()
 {
