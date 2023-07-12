@@ -22,8 +22,11 @@ void ACarPlayerController::BeginPlay()
 		}
 
 		MovementComponent = Vehicle->GetVehicleMovementComponent();
-		VehicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
-		VehicleWidget->AddToViewport(0);
+		if (VehicleWidget == nullptr)
+		{
+			VehicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
+			VehicleWidget->AddToViewport(0);
+		}
 	}
 
 	if (GetLocalRole() == ROLE_Authority)
@@ -58,7 +61,17 @@ void ACarPlayerController::ProceedLapUpdating(int Lap)
 	}
 }
 
-
+void ACarPlayerController::CreateUI()
+{
+	if (ULocalPlayer* LocalPlayer = GetLocalPlayer())
+	{
+		if (VehicleWidget == nullptr)
+		{
+			VehicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
+			VehicleWidget->AddToViewport(0);
+		}
+	}
+}
 
 void ACarPlayerController::Destroyed()
 {

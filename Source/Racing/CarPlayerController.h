@@ -66,7 +66,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ProceedLapUpdating(int Lap);
 
- 
+	UFUNCTION(BlueprintCallable)
+	void CreateUI();
 
 private:
 
