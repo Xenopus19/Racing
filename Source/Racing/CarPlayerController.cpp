@@ -45,7 +45,7 @@ void ACarPlayerController::UpdateLap_Implementation(int Lap)
 void ACarPlayerController::ShowPlayerRank_Implementation(int Rank)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Show player rank"));
-	OnRaceFinished.Broadcast(Rank);
+	OnRaceFinished.Broadcast();
 }
 
 void ACarPlayerController::ProceedLapUpdating(int Lap)

@@ -16,7 +16,6 @@ class RACING_API ARacingGameStateBase : public AGameStateBase
 	
 
 public:
-
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	bool DidPlayerFinishRace(int PlayerLap);
 

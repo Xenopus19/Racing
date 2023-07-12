@@ -18,6 +18,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLapEvent, int, Lap);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRaceFinishedEvent);
+
 UCLASS()
 class RACING_API ACarPlayerController : public APlayerController
 {
@@ -47,7 +49,7 @@ public:
 	FLapEvent OnLapUpdated;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintAssignable, Category = "Lap events")
-	FLapEvent OnRaceFinished;
+	FRaceFinishedEvent OnRaceFinished;
 
 	UFUNCTION(BlueprintCallable, Client, Unreliable)
 	void UpdateLap(int Lap);
