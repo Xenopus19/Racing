@@ -28,15 +28,6 @@ void ACarPlayerController::BeginPlay()
 			VehicleWidget->AddToViewport(0);
 		}
 	}
-
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		AActor* FoundSpectator = UGameplayStatics::GetActorOfClass(GetWorld(), SpectatorSpawn);
-		FVector Location = FoundSpectator->GetActorLocation();
-		FActorSpawnParameters const SpawnInfo;
-		AActor* SpawnedSpectator = GetWorld()->SpawnActor<AActor>(Location, FRotator::ZeroRotator);
-		Possess(Cast<APawn>(SpawnedSpectator));
-	}
 }
 
 void ACarPlayerController::UpdateLap_Implementation(int Lap)
