@@ -14,6 +14,7 @@
 struct FInputActionInstance;
 class UInputMappingContext;
 class UInputAction;
+class UNiagaraSystem;
 /**
  * 
  */
@@ -34,6 +35,8 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GAS")
 	TSubclassOf<UGameplayEffect> InitSpeedEffect;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GAS")
+	TSubclassOf<UGameplayEffect> ZeroSpeedEffect;
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyGameplayEffect(UGameplayEffect* Effect);
@@ -45,6 +48,9 @@ public:
 	int GetCheckpoint() const;
 	int GetLap() const;
 	void IncreaseLap();
+
+	UFUNCTION(BlueprintCallable)
+	void DestroyWithParticle();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -53,6 +59,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void ApplySpeedChanges(float Speed);
+
+	UFUNCTION(BlueprintCallable, NetMulticast, Unreliable)
+	void SpawnFinishParticle_Multicast();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	UCameraComponent* FrontCamera;
@@ -62,6 +71,9 @@ protected:
 	USpringArmComponent* BackSpringArm1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
 	USpringArmComponent* FrontSpringArm2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NiagaraParticles")
+	UNiagaraSystem* NS_FinishParticle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
 	USkeletalMeshComponent* CarMesh;

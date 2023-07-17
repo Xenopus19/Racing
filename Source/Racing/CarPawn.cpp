@@ -9,6 +9,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/UnrealMathUtility.h"
 #include "Net/UnrealNetwork.h"
+#include "NiagaraFunctionLibrary.h"
+
+
 
 DEFINE_LOG_CATEGORY_STATIC(Car, All, All)
 
@@ -51,6 +54,14 @@ void ACarPawn::PostInitializeComponents()
 	if(AbilitySystemComponent)
 	{
 		AbilitySystemComponent->AddSet<USpeedAttributeSet>();
+	}
+}
+
+void ACarPawn::SpawnFinishParticle_Multicast_Implementation()
+{
+	if (NS_FinishParticle)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_FinishParticle, GetActorLocation(), FRotator::ZeroRotator);
 	}
 }
 
@@ -102,6 +113,15 @@ int ACarPawn::GetLap() const
 void ACarPawn::IncreaseLap()
 {
 	CurrentLap++;
+}
+
+void ACarPawn::DestroyWithParticle()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PARTICLE"));
+
+	SpawnFinishParticle_Multicast();
+
+	ApplyGameplayEffect(ZeroSpeedEffect.GetDefaultObject());
 }
 
 FTransform ACarPawn::FindResetTransform()
