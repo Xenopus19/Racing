@@ -43,9 +43,7 @@ void AStart::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 			return;
 		CurrentLap = CarPawn->GetLap();
 		CarPawn->IncreaseLap();
-		UE_LOG(CarStart, Display, TEXT("Lap: %d"), (CurrentLap + 1));
 		ACarPlayerController* CarPlayerController = Cast<ACarPlayerController>(CarPawn->GetController());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("On Overlap Begin"));
 		CarPlayerController->ProceedLapUpdating(CurrentLap+1);
 		
 	}

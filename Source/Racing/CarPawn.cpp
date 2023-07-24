@@ -117,8 +117,6 @@ void ACarPawn::IncreaseLap()
 
 void ACarPawn::DestroyWithParticle()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PARTICLE"));
-
 	SpawnFinishParticle_Multicast();
 
 	ApplyGameplayEffect(ZeroSpeedEffect.GetDefaultObject());
