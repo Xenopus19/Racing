@@ -9,6 +9,7 @@
 #include "InputMappingContext.h"
 #include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "NiagaraFunctionLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "WheeledVehiclePawn.h"
 #include "CarPlayerController.generated.h"

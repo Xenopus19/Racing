@@ -51,6 +51,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void DestroyWithParticle();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnLapFinishParticle();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -74,6 +77,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NiagaraParticles")
 	UNiagaraSystem* NS_FinishParticle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NiagaraParticles")
+	UNiagaraSystem* NS_LapParticle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mesh")
 	USkeletalMeshComponent* CarMesh;

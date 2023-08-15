@@ -3,10 +3,9 @@
 
 #include "CarPlayerController.h"
 #include "RacingGameStateBase.h"
-
 #include "Kismet/GameplayStatics.h"
 
-DEFINE_LOG_CATEGORY_STATIC(Controller, All, All)
+//DEFINE_LOG_CATEGORY_STATIC(Controller, All, All)
 
 void ACarPlayerController::BeginPlay()
 {
@@ -42,13 +41,18 @@ void ACarPlayerController::ShowPlayerRank_Implementation(int Rank)
 
 void ACarPlayerController::ProceedLapUpdating(int Lap)
 {
+	ACarPawn* Car = Cast<ACarPawn>(GetPawn());
 	UpdateLap(Lap);
-
+	
 	if (Cast<ARacingGameStateBase>(GetGameInstance()->GetWorld()->GetGameState())->DidPlayerFinishRace(Lap))
 	{
 		ShowPlayerRank(Cast<ARacingGameStateBase>(GetGameInstance()->GetWorld()->GetGameState())->GetPlayersFinishedRace());
 
-		Cast<ACarPawn>(GetPawn())->DestroyWithParticle();
+		Car->DestroyWithParticle();
+	}
+	else
+	{
+		Car->SpawnLapFinishParticle();
 	}
 }
 

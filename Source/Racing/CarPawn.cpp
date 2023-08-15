@@ -122,6 +122,11 @@ void ACarPawn::DestroyWithParticle()
 	ApplyGameplayEffect(ZeroSpeedEffect.GetDefaultObject());
 }
 
+void ACarPawn::SpawnLapFinishParticle()
+{
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_LapParticle, GetActorLocation(), FRotator::ZeroRotator);
+}
+
 FTransform ACarPawn::FindResetTransform()
 {
 	FVector NewLocation = GetActorLocation() + FVector(0, 0, 50);
