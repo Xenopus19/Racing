@@ -122,7 +122,7 @@ void ACarPawn::DestroyWithParticle()
 	ApplyGameplayEffect(ZeroSpeedEffect.GetDefaultObject());
 }
 
-void ACarPawn::SpawnLapFinishParticle()
+void ACarPawn::SpawnLapFinishParticle_NetMulticast_Implementation()
 {
 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_LapParticle, GetActorLocation(), FRotator::ZeroRotator);
 }

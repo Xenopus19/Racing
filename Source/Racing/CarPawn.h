@@ -52,8 +52,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DestroyWithParticle();
 
-	UFUNCTION(BlueprintCallable)
-	void SpawnLapFinishParticle();
+	UFUNCTION(BlueprintCallable, NetMulticast, Unreliable)
+	void SpawnLapFinishParticle_NetMulticast();
 	
 protected:
 	virtual void BeginPlay() override;

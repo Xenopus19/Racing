@@ -52,7 +52,7 @@ void ACarPlayerController::ProceedLapUpdating(int Lap)
 	}
 	else
 	{
-		Car->SpawnLapFinishParticle();
+		Car->SpawnLapFinishParticle_NetMulticast();
 	}
 }
 
