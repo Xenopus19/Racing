@@ -40,5 +40,8 @@
 			"Name": "AbilitySystemGameFeatureActions",
 			"Enabled": true
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }
