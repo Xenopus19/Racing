@@ -21,7 +21,7 @@ void ACarPlayerController::BeginPlay()
 		}
 
 		MovementComponent = Vehicle->GetVehicleMovementComponent();
-		if (VehicleWidget == nullptr)
+		if (VehicleWidget->IsValidLowLevel())
 		{
 			VehicleWidget = CreateWidget<UUserWidget>(this, WidgetClass);
 			VehicleWidget->AddToViewport(0);
